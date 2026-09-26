@@ -1,8 +1,12 @@
 #include <iostream>
-#include "plot.h"
+#include <vector>
+#include <cmath>
+#include "matplotlibcpp.h"
 #include "Beam.cpp"
 
 using namespace std;
+
+namespace plt = matplotlibcpp;
 
 int main()
 {
@@ -58,42 +62,32 @@ int main()
         beam.set_supportType(sup);
         beam.set_selfWeight(weight);
 
-        //Create Plots
-        signalsmith::plot::Plot2D plot;
-        auto &line = plot.line();
+        //create vectors to store results
+        vector<double> x, m, s, t;
 
-        for (double x = 0; x < len; x += 0.1)
+        //store results in vectors
+        for (double i = 0; i < len; i += 0.1)
         {
-            //plot moment
-            line.add(x, beam.calculate_moment(x));
-
-            //plot shear
-
-
-            //plot torsion
-
+            x.push_back(i);
+            m.push_back(beam.calculate_moment(i));
+            s.push_back(beam.calculate_shear(i));
+            t.push_back(beam.calculate_torsion(i));
         }
 
-        plot.write("output.svg");
+        //plot moment
+        plt::plot(x, m);
+        plt::title("Moment Diagram");
+        plt::show();
 
-        }
-        else if(tolower(sup) == "f")
-        {
-            for(double x = 0; x <= len; x += 0.1)
-            {
-                //calculate moment
-                moment =
+        //plot shear
+        plt::plot(x, s);
+        plt::title("Shear Diagram");
+        plt::show();
 
-                //calculate shear
-
-
-                //calculate torsion
-
-
-            }
-
-
-        }
+        //plot torsion
+        plt::plot(x, t);
+        plt::title("Torsion Diagram");
+        plt::show();
 
         cout << "Do you want to analyse another beam? [Y/N]: ";
         cin >> response;

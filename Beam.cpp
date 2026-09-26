@@ -5,21 +5,21 @@
 using namespace std;
 
 void Beam::set_depth(int pdepth)
-[
+{
     depth = pdepth;
-]
+}
 void Beam::set_width(int pwidth)
-[
+{
     width = pwidth;
-]
+}
 void Beam::set_length(int plength)
-[
+{
     length = plength;
-]
+}
 void Beam::set_p_load(double pp_load)
-[
+{
     p_load = pp_load;
-]
+}
 void Beam::set_p_location(int pp_location)
 {
     p_location = pp_location;
@@ -30,7 +30,7 @@ void Beam::set_w_load(double pw_load)
 }
 void Beam::set_supportType(char psupport)
 {
-    support = psupport;
+    supportType = psupport;
 }
 void Beam::set_selfWeight(double weight)
 {
@@ -68,7 +68,7 @@ double Beam::get_selfWeight() const
 {
     return selfWeight;
 }
-double Beam::calculate_moment(int position)
+double Beam::calculate_moment(int position) const
 {
     double reaction, moment;
 
