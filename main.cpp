@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
     int dep, wid, len, p, w;
-    double loc, moment, shear, torsion;
+    double pos, moment, shear, torsion;
     char sup, response;
 
     do{
@@ -31,7 +31,7 @@ int main()
         cout << endl;
 
         cout << "p location (mm): ";
-        cin >> loc;
+        cin >> pos;
         cout << endl;
 
         cout << "line load, w (kN/m): ";
@@ -49,7 +49,7 @@ int main()
         beam.set_width(wid);
         beam.set_length(len);
         beam.set_p_load(p);
-        beam.set_p_location(loc);
+        beam.set_p_location(pos);
         beam.set_w_load(w);
         beam.set_supportType(sup);
 
