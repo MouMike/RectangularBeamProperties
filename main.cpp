@@ -6,8 +6,8 @@ using namespace std;
 
 int main()
 {
-    int dep, wid, len, p, w;
-    double pos, moment, shear, torsion;
+    int dep, wid, len, pos;
+    double p, w, weight, moment, shear, torsion;
     char sup, response;
 
     do{
@@ -42,6 +42,10 @@ int main()
         cin >> sup;
         cout << endl;
 
+        cout << "self-weight (kN/m3): ";
+        cin >> weight;
+        cout << endl;
+
         Beam beam;
 
         //set beam properties
@@ -52,6 +56,7 @@ int main()
         beam.set_p_location(pos);
         beam.set_w_load(w);
         beam.set_supportType(sup);
+        beam.set_selfWeight(weight);
 
         //Create Plots
         signalsmith::plot::Plot2D plot;
