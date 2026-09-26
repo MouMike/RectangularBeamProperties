@@ -60,15 +60,53 @@ char Beam::get_supportType() const
 [
     return supportType;
 ]
-double Beam::calculate_moment(double position)
+double Beam::calculate_moment(int position)
+{
+    double reaction, moment;
+
+    //for a simply supported beam
+    if(tolower(supportType) == "s")
+    {
+        reaction = - ((p_load * (length - p_location) + w_load
+                               * length * length / 2.0) / length);
+
+        if(position < p_location)
+        {
+            moment  = reaction * position - w_load * position * position / 2.0;
+        }
+
+        else
+        {
+            moment  = reaction * position + p_load * (position - length / 2.0) - w_load * position * position / 2.0;
+        }
+
+    }
+
+    //for a fixed beam
+    else if(tolower(supportType) == "f")
+    {
+        /*reaction = - ((p_load * (length - p_location) + w_load
+                               * length * length / 2.0) / length);
+
+        if(position < p_location)
+        {
+            moment  = reaction * position - w_load * position * position / 2.0;
+        }
+
+        else
+        {
+            moment  = reaction * position + p_load * (position - length / 2.0) - w_load * position * position / 2.0;
+        }*/
+    }
+
+    return moment;
+
+}
+double Beam::calculate_shear(int position)
 {
 
 }
-double Beam::calculate_shear(double position)
-{
-
-}
-double Beam::calculate_torsion(double position)
+double Beam::calculate_torsion(int position)
 {
 
 }

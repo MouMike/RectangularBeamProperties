@@ -53,30 +53,24 @@ int main()
         beam.set_w_load(w);
         beam.set_supportType(sup);
 
-        if(tolower(sup) == "s")
+        //Create Plots
+        signalsmith::plot::Plot2D plot;
+        auto &line = plot.line();
+
+        for (double x = 0; x < len; x += 0.1)
         {
-            signalsmith::plot::Plot2D plot;
-            auto &line = plot.line();
+            //plot moment
+            line.add(x, beam.calculate_moment(x));
 
-            for (double x = 0; x < len; x += 0.1)
-            {
-                line.add(x, beam.calculate_moment(x));
-            }
-
-            plot.write("output.svg");
-            /////////////
-            for(int x = 0; x <= len; x++)
-            {
-                //calculate moment
-                moment =
-
-                //calculate shear
+            //plot shear
 
 
-                //calculate torsion
+            //plot torsion
 
+        }
 
-            }///////////////
+        plot.write("output.svg");
+
         }
         else if(tolower(sup) == "f")
         {
