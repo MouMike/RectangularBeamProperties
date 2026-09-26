@@ -104,7 +104,42 @@ double Beam::calculate_moment(int position)
 }
 double Beam::calculate_shear(int position)
 {
+    double reaction, shear;
 
+    //for a simply supported beam
+    if(tolower(supportType) == "s")
+    {
+        reaction = - ((p_load * (length - p_location) + w_load
+                               * length * length / 2.0) / length);
+
+        if(position < p_location)
+        {
+            shear  = -reaction - w_load * position;      //forgot to include w
+        }
+
+        else
+        {
+            moment  = -reaction - p_load - w_load * position;      //forgot to include w
+        }
+
+    }
+
+    //for a fixed beam
+    else if(tolower(supportType) == "f")
+    {
+        /*reaction = - ((p_load * (length - p_location) + w_load
+                               * length * length / 2.0) / length);
+
+        if(position < p_location)
+        {
+            shear  = reaction;
+        }
+
+        else
+        {
+            moment  = reaction - p_load;
+        }*/
+    }
 }
 double Beam::calculate_torsion(int position)
 {
