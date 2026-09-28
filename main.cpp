@@ -2,7 +2,7 @@
 #include <vector>
 #include <cmath>
 #include "matplotlibcpp.h"
-#include "Beam.cpp"
+#include "Beam.h"
 
 using namespace std;
 
@@ -69,7 +69,7 @@ int main()
         for (double i = 0; i < len; i += 0.1)
         {
             x.push_back(i);
-            m.push_back(beam.calculate_moment(i));
+            //m.push_back(beam.calculate_moment(i));
             s.push_back(beam.calculate_shear(i));
             t.push_back(beam.calculate_torsion(i));
         }
@@ -93,9 +93,7 @@ int main()
         cin >> response;
         cout << endl;
 
-
-    }while(toupper(response) == "Y")
-
+    }while(toupper(response) == 'Y');
 
     return 0;
 }

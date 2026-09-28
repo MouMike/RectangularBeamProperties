@@ -1,3 +1,6 @@
+#ifndef BEAM_H
+#define BEAM_H
+
 class Beam
 {
     public:
@@ -34,6 +37,6 @@ class Beam
         //double moment;
         //double shear;
         //double torsion;
-
-
 };
+
+#endif // BEAM_H

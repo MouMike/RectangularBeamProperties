@@ -73,25 +73,25 @@ double Beam::calculate_moment(int position) const
     double reaction, moment;
 
     //for a simply supported beam
-    if(tolower(supportType) == "s")
+    if(tolower(supportType) == 's')
     {
-        reaction = - ((p_load * (length - p_location) + w_load
-                               * length * length / 2.0) / length);
+        reaction = -((p_load * (length - p_location) * 1e-03 + w_load
+                               * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03));
 
         if(position < p_location)
         {
-            moment  = reaction * position - w_load * position * position / 2.0;
+            moment  = reaction * position * 1e-03 + w_load * position * 1e-03 * position * 1e-03 / 2.0;
         }
 
         else
         {
-            moment  = reaction * position + p_load * (position - length / 2.0) - w_load * position * position / 2.0;
+            moment  = reaction * position * 1e-03 + p_load * (position - length / 2.0) * 1e-03 + w_load * position * 1e-03 * position * 1e-03 / 2.0;
         }
 
     }
 
     //for a fixed beam
-    else if(tolower(supportType) == "f")
+    else if(tolower(supportType) == 'f')
     {
         /*reaction = - ((p_load * (length - p_location) + w_load
                                * length * length / 2.0) / length);
@@ -110,30 +110,30 @@ double Beam::calculate_moment(int position) const
     return moment;
 
 }
-double Beam::calculate_shear(int position)
+double Beam::calculate_shear(int position) const
 {
     double reaction, shear;
 
     //for a simply supported beam
-    if(tolower(supportType) == "s")
+    if(tolower(supportType) == 's')
     {
-        reaction = - ((p_load * (length - p_location) + w_load
-                               * length * length / 2.0) / length);
+        reaction = -((p_load * (length - p_location) * 1e-03 + w_load
+                               * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03));
 
         if(position < p_location)
         {
-            shear  = -reaction - w_load * position;
+            shear  = -reaction + w_load * position * 1e-03;
         }
 
         else
         {
-            moment  = -reaction - p_load - w_load * position;
+            shear  = -reaction + p_load + w_load * position * 1e-03;
         }
 
     }
 
     //for a fixed beam
-    else if(tolower(supportType) == "f")
+    else if(tolower(supportType) == 'f')
     {
         /*reaction = - ((p_load * (length - p_location) + w_load
                                * length * length / 2.0) / length);
@@ -148,8 +148,10 @@ double Beam::calculate_shear(int position)
             moment  = reaction - p_load;
         }*/
     }
+
+    return shear;
 }
-double Beam::calculate_torsion(int position)
+double Beam::calculate_torsion(int position) const
 {
 
 }

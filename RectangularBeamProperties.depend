@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1790596894 source:c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\beam.cpp
+	"Beam.h"
+	<iostream>
+	<fstream>
+
+1790506552 c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\beam.h
+
+1790597245 source:c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\main.cpp
+	<iostream>
+	<vector>
+	<cmath>
+	"matplotlibcpp.h"
+	"Beam.h"
+
+1790462634 c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\matplotlibcpp.h
+	<Python.h>
+	<vector>
+	<map>
+	<array>
+	<numeric>
+	<algorithm>
+	<stdexcept>
+	<iostream>
+	<cstdint>
+	<functional>
+	<string>
+	<numpy/arrayobject.h>
+	<opencv2/opencv.hpp>
+
+1790463297 c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\beam.cpp
+	"Beam.h"
+	<iostream>
+	<fstream>
+
