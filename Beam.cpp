@@ -93,17 +93,17 @@ double Beam::calculate_moment(int position) const
     //for a simply supported beam
     if(tolower(supportType) == 's')
     {
-        reaction = -((p_load * (length - p_location) * 1e-03 + (w_load + self_weight)
+        reaction = -((1.6 * p_load * (length - p_location) * 1e-03 + (1.6 * w_load + 1.2 * self_weight)
                                * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03));
 
         if(position < p_location)
         {
-            moment  = reaction * position * 1e-03 + (w_load + self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
+            moment  = reaction * position * 1e-03 + (1.6 * w_load + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
         }
 
         else
         {
-            moment  = reaction * position * 1e-03 + p_load * (position - length / 2.0) * 1e-03 + (w_load + self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
+            moment  = reaction * position * 1e-03 + 1.6 * p_load * (position - length / 2.0) * 1e-03 + (1.6 * w_load + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
         }
 
     }
@@ -137,17 +137,17 @@ double Beam::calculate_shear(int position) const
     //for a simply supported beam
     if(tolower(supportType) == 's')
     {
-        reaction = -((p_load * (length - p_location) * 1e-03 + (w_load + self_weight)
+        reaction = -((1.6 * p_load * (length - p_location) * 1e-03 + (1.6 * w_load + 1.2 * self_weight)
                                * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03));
 
         if(position < p_location)
         {
-            shear  = reaction + (w_load + self_weight) * position * 1e-03;
+            shear  = reaction + (1.6 * w_load + 1.2 * self_weight) * position * 1e-03;
         }
 
         else
         {
-            shear  = reaction + p_load + (w_load + self_weight) * position * 1e-03;
+            shear  = reaction + 1.6 * p_load + (1.6 * w_load + 1.2 * self_weight) * position * 1e-03;
         }
 
     }
@@ -180,12 +180,12 @@ double Beam::calculate_torsion(int position) const
     {
         if(position < t_location)
         {
-            temp_torsion  = - torsion / 2;
+            temp_torsion  = -1.6 * torsion / 2;
         }
 
         else
         {
-            temp_torsion  = torsion / 2;
+            temp_torsion  = 1.6 * torsion / 2;
         }
     }
 
