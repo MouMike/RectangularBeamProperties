@@ -86,22 +86,24 @@ double Beam::get_selfWeight() const
 }
 double Beam::calculate_moment(int position) const
 {
-    double reaction, moment;
+    double reaction, moment, self_weight;
+
+    self_weight = selfWeight * depth * 1e-03 * width * 1e-03;
 
     //for a simply supported beam
     if(tolower(supportType) == 's')
     {
-        reaction = -((p_load * (length - p_location) * 1e-03 + w_load
+        reaction = -((p_load * (length - p_location) * 1e-03 + (w_load + self_weight)
                                * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03));
 
         if(position < p_location)
         {
-            moment  = reaction * position * 1e-03 + w_load * position * 1e-03 * position * 1e-03 / 2.0;
+            moment  = reaction * position * 1e-03 + (w_load + self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
         }
 
         else
         {
-            moment  = reaction * position * 1e-03 + p_load * (position - length / 2.0) * 1e-03 + w_load * position * 1e-03 * position * 1e-03 / 2.0;
+            moment  = reaction * position * 1e-03 + p_load * (position - length / 2.0) * 1e-03 + (w_load + self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
         }
 
     }
@@ -128,22 +130,24 @@ double Beam::calculate_moment(int position) const
 }
 double Beam::calculate_shear(int position) const
 {
-    double reaction, shear;
+    double reaction, shear, self_weight;
+
+    self_weight = selfWeight * depth * 1e-03 * width * 1e-03;
 
     //for a simply supported beam
     if(tolower(supportType) == 's')
     {
-        reaction = -((p_load * (length - p_location) * 1e-03 + w_load
+        reaction = -((p_load * (length - p_location) * 1e-03 + (w_load + self_weight)
                                * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03));
 
         if(position < p_location)
         {
-            shear  = reaction + w_load * position * 1e-03;
+            shear  = reaction + (w_load + self_weight) * position * 1e-03;
         }
 
         else
         {
-            shear  = reaction + p_load + w_load * position * 1e-03;
+            shear  = reaction + p_load + (w_load + self_weight) * position * 1e-03;
         }
 
     }
