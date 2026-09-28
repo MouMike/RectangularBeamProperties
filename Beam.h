@@ -10,6 +10,8 @@ class Beam
         void set_p_load(double pp_load);
         void set_p_location(int pp_location);
         void set_w_load(double pw_load);
+        void set_torsion(double ptorsion);
+        void set_t_location(int pt_location);
         void set_supportType(char psupport);
         void set_selfWeight(double weight);
         int get_depth() const;
@@ -18,6 +20,8 @@ class Beam
         double get_p_load() const;
         int get_p_location() const;
         double get_w_load() const;
+        double get_torsion() const;
+        int get_t_location() const;
         char get_supportType() const;
         double get_selfWeight() const;
         double calculate_moment(int position) const;
@@ -31,6 +35,8 @@ class Beam
         double p_load;
         int p_location;
         double w_load;
+        double torsion;
+        int t_location;
         char supportType;
         double selfWeight;
 

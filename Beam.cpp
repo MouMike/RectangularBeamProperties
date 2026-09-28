@@ -24,6 +24,14 @@ void Beam::set_p_location(int pp_location)
 {
     p_location = pp_location;
 }
+void Beam::set_torsion(double ptorsion)
+{
+    torsion = ptorsion;
+}
+void Beam::set_t_location(int pt_location)
+{
+    t_location = pt_location;
+}
 void Beam::set_w_load(double pw_load)
 {
     w_load = pw_load;
@@ -59,6 +67,14 @@ int Beam::get_p_location() const
 double Beam::get_w_load() const
 {
     return w_load;
+}
+double Beam::get_torsion() const
+{
+    return torsion;
+}
+int Beam::get_t_location() const
+{
+    return t_location;
 }
 char Beam::get_supportType() const
 {
@@ -153,33 +169,29 @@ double Beam::calculate_shear(int position) const
 }
 double Beam::calculate_torsion(int position) const
 {
-    double reaction, torsion;
+    double temp_torsion;
 
     //for a simply supported beam
     if(tolower(supportType) == 's')
     {
-        reaction = -((p_load * (length - p_location) * 1e-03 + w_load
-                               * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03));
-
-        if(position < p_location)
+        if(position < t_location)
         {
-            //shear  = reaction + w_load * position * 1e-03;
+            temp_torsion  = - torsion / 2;
         }
 
         else
         {
-            //shear  = reaction + p_load + w_load * position * 1e-03;
+            temp_torsion  = torsion / 2;
         }
-
     }
 
     //for a fixed beam
     else if(tolower(supportType) == 'f')
     {
-        /*reaction = - ((p_load * (length - p_location) + w_load
+        /*reaction = - ((p_load * (length - t_location) + w_load
                                * length * length / 2.0) / length);
 
-        if(position < p_location)
+        if(position < t_location)
         {
             shear  = reaction;
         }
@@ -190,5 +202,5 @@ double Beam::calculate_torsion(int position) const
         }*/
     }
 
-    return shear;
+    return temp_torsion;
 }

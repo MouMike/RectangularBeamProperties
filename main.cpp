@@ -10,8 +10,8 @@ namespace plt = matplotlibcpp;
 
 int main()
 {
-    int dep, wid, len, pos;
-    double p, w, weight, moment, shear, torsion;
+    int dep, wid, len, p_pos, t_pos;
+    double P, w, T, weight, moment, shear, torsion;
     char sup, response;
 
     do{
@@ -30,16 +30,24 @@ int main()
         cin >> len;
         cout << endl;
 
-        cout << "point load, p (kN): ";
-        cin >> p;
+        cout << "point load, P (kN): ";
+        cin >> P;
         cout << endl;
 
-        cout << "p location (mm): ";
-        cin >> pos;
+        cout << "P location (mm): ";
+        cin >> p_pos;
         cout << endl;
 
         cout << "line load, w (kN/m): ";
         cin >> w;
+        cout << endl;
+
+        cout << "torsional moment, T (kNm): ";
+        cin >> T;
+        cout << endl;
+
+        cout << "T location (mm): ";
+        cin >> t_pos;
         cout << endl;
 
         cout << "type of support (simple(s)/fixed(f)): ";
@@ -56,9 +64,11 @@ int main()
         beam.set_depth(dep);
         beam.set_width(wid);
         beam.set_length(len);
-        beam.set_p_load(p);
-        beam.set_p_location(pos);
+        beam.set_p_load(P);
+        beam.set_p_location(p_pos);
         beam.set_w_load(w);
+        beam.set_torsion(T);
+        beam.set_t_location(t_pos);
         beam.set_supportType(sup);
         beam.set_selfWeight(weight);
 
@@ -76,17 +86,17 @@ int main()
 
         //plot moment
         plt::plot(x, m);
-        plt::title("Moment Diagram");
+        plt::title("Bending Moment Diagram");
         plt::show();
 
         //plot shear
         plt::plot(x, s);
-        plt::title("Shear Diagram");
+        plt::title("Shear Force Diagram");
         plt::show();
 
         //plot torsion
         plt::plot(x, t);
-        plt::title("Torsion Diagram");
+        plt::title("Torsional Moment Diagram");
         plt::show();
 
         cout << "Do you want to analyse another beam? [Y/N]: ";

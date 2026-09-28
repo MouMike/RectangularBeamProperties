@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1790599467 source:c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\beam.cpp
+1790614996 source:c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\beam.cpp
 	"Beam.h"
 	<iostream>
 	<fstream>
 
-1790506552 c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\beam.h
+1790614477 c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\beam.h
 
-1790598684 source:c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\main.cpp
+1790615017 source:c:\users\matel\onedrive\documents\job applications\software engineering\prokon\exercise\rectangularbeamproperties\main.cpp
 	<iostream>
 	<vector>
 	<cmath>
