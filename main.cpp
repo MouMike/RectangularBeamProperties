@@ -69,7 +69,7 @@ int main()
         for (double i = 0; i < len; i += 0.1)
         {
             x.push_back(i);
-            //m.push_back(beam.calculate_moment(i));
+            m.push_back(beam.calculate_moment(i));
             s.push_back(beam.calculate_shear(i));
             t.push_back(beam.calculate_torsion(i));
         }
