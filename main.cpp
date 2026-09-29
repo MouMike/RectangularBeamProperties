@@ -50,7 +50,7 @@ int main()
         cin >> t_pos;
         cout << endl;
 
-        cout << "type of support (simple(s)/fixed(f)): ";
+        cout << "type of support (simple[s]/fixed[f]): ";
         cin >> sup;
         cout << endl;
 
@@ -84,19 +84,27 @@ int main()
             t.push_back(beam.calculate_torsion(i));
         }
 
-        //plot moment
+        //plot bending moment diagram
+        plt::subplot(3,1,1);
         plt::plot(x, m);
         plt::title("Bending Moment Diagram");
-        plt::show();
+        plt::ylabel("Bending Moment (kNm)");
+        //plt::show();
 
-        //plot shear
+        //plot shear force diagram
+        plt::subplot(3,1,2);
         plt::plot(x, s);
         plt::title("Shear Force Diagram");
-        plt::show();
+        plt::ylabel("Shear Force (kN)");
+        //plt::show();
 
-        //plot torsion
+        //plot torsional moment diagram
+        plt::subplot(3,1,3);
         plt::plot(x, t);
         plt::title("Torsional Moment Diagram");
+        plt::ylabel("Torsional Moment (kNm)");
+
+        plt::tight_layout(); // Fixes overlapping labels
         plt::show();
 
         cout << "Do you want to analyse another beam? [Y/N]: ";

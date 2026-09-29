@@ -4,6 +4,7 @@
 class Beam
 {
     public:
+        Beam();
         void set_depth(int pdepth);
         void set_width(int pwidth);
         void set_length(int plength);

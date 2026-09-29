@@ -4,6 +4,10 @@
 
 using namespace std;
 
+Beam::Beam(): depth(0), width(0), length(0), p_load(0), p_location(0), w_load(0),
+                torsion(0), t_location(0), supportType(' '), selfWeight(0)
+{
+}
 void Beam::set_depth(int pdepth)
 {
     depth = pdepth;
@@ -93,17 +97,18 @@ double Beam::calculate_moment(int position) const
     //for a simply supported beam
     if(tolower(supportType) == 's')
     {
-        reaction = -((1.6 * p_load * (length - p_location) * 1e-03 + (1.6 * w_load + 1.2 * self_weight)
-                               * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03));
+        reaction = (1.6 * p_load * (length - p_location) * 1e-03 + (1.6 * w_load + 1.2 * self_weight)
+                               * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03);
 
         if(position < p_location)
         {
-            moment  = reaction * position * 1e-03 + (1.6 * w_load + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
+            moment  = reaction * position * 1e-03 - (1.6 * w_load + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
         }
 
         else
         {
-            moment  = reaction * position * 1e-03 + 1.6 * p_load * (position - length / 2.0) * 1e-03 + (1.6 * w_load + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
+            moment  = reaction * position * 1e-03 - 1.6 * p_load * (position - length / 2.0)
+            * 1e-03 - (1.6 * w_load + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
         }
 
     }
@@ -137,17 +142,17 @@ double Beam::calculate_shear(int position) const
     //for a simply supported beam
     if(tolower(supportType) == 's')
     {
-        reaction = -((1.6 * p_load * (length - p_location) * 1e-03 + (1.6 * w_load + 1.2 * self_weight)
-                               * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03));
+        reaction = (1.6 * p_load * (length - p_location) * 1e-03 + (1.6 * w_load + 1.2 * self_weight)
+                               * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03);
 
         if(position < p_location)
         {
-            shear  = reaction + (1.6 * w_load + 1.2 * self_weight) * position * 1e-03;
+            shear  = -reaction + (1.6 * w_load + 1.2 * self_weight) * position * 1e-03;
         }
 
         else
         {
-            shear  = reaction + 1.6 * p_load + (1.6 * w_load + 1.2 * self_weight) * position * 1e-03;
+            shear  = -reaction + 1.6 * p_load + (1.6 * w_load + 1.2 * self_weight) * position * 1e-03;
         }
 
     }
