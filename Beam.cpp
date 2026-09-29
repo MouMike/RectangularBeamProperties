@@ -90,6 +90,7 @@ double Beam::get_selfWeight() const
 }
 double Beam::calculate_moment(int position) const
 {
+    //SANS10100-1, clause 4.2.2
     double reaction, moment, self_weight;
 
     self_weight = selfWeight * depth * 1e-03 * width * 1e-03;
@@ -135,6 +136,7 @@ double Beam::calculate_moment(int position) const
 }
 double Beam::calculate_shear(int position) const
 {
+    //SANS10100-1, clause 4.2.2
     double reaction, shear, self_weight;
 
     self_weight = selfWeight * depth * 1e-03 * width * 1e-03;
@@ -178,6 +180,7 @@ double Beam::calculate_shear(int position) const
 }
 double Beam::calculate_torsion(int position) const
 {
+    //SANS10100-1, clause 4.2.2
     double temp_torsion;
 
     //for a simply supported beam

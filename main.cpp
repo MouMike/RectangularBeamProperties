@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <fstream>
 #include "matplotlibcpp.h"
 #include "Beam.h"
 
@@ -14,49 +15,69 @@ int main()
     double P, w, T, weight, moment, shear, torsion;
     char sup, response;
 
+
+
     do{
-        //prompt user input
-        cout << "Enter Beam Properties" << endl;
-
-        cout << "depth (mm): ";
-        cin >> dep;
+        char loadInput;
+        cout << "Do you want to load input from file? [Y/N]: ";
+        cin >> loadInput;
         cout << endl;
 
-        cout << "width (mm): ";
-        cin >> wid;
-        cout << endl;
+        if (toupper(loadInput) == 'Y')
+        {
+            ifstream inStream;
+            inStream.open("inputFile.txt");
 
-        cout << "length (mm): ";
-        cin >> len;
-        cout << endl;
+            inStream >> dep >> wid >> len >> P >> p_pos >> w >> T >> t_pos >> sup >> weight;
 
-        cout << "point load, P (kN): ";
-        cin >> P;
-        cout << endl;
+            inStream.close();
+        }
 
-        cout << "P location (mm): ";
-        cin >> p_pos;
-        cout << endl;
+        else if (toupper(loadInput) == 'N')
+        {
+            //prompt user input
+            cout << "Enter Beam Properties" << endl;
 
-        cout << "line load, w (kN/m): ";
-        cin >> w;
-        cout << endl;
+            cout << "depth (mm): ";
+            cin >> dep;
+            cout << endl;
 
-        cout << "torsional moment, T (kNm): ";
-        cin >> T;
-        cout << endl;
+            cout << "width (mm): ";
+            cin >> wid;
+            cout << endl;
 
-        cout << "T location (mm): ";
-        cin >> t_pos;
-        cout << endl;
+            cout << "length (mm): ";
+            cin >> len;
+            cout << endl;
 
-        cout << "type of support (simple[s]/fixed[f]): ";
-        cin >> sup;
-        cout << endl;
+            cout << "point load, P (kN): ";
+            cin >> P;
+            cout << endl;
 
-        cout << "self-weight (kN/m3): ";
-        cin >> weight;
-        cout << endl;
+            cout << "P location (mm): ";
+            cin >> p_pos;
+            cout << endl;
+
+            cout << "uniformly distributed load, w (kN/m): ";
+            cin >> w;
+            cout << endl;
+
+            cout << "torsional moment, T (kNm): ";
+            cin >> T;
+            cout << endl;
+
+            cout << "T location (mm): ";
+            cin >> t_pos;
+            cout << endl;
+
+            cout << "type of support (simple[s]/fixed[f]): ";
+            cin >> sup;
+            cout << endl;
+
+            cout << "self-weight (kN/m3): ";
+            cin >> weight;
+            cout << endl;
+        }
 
         Beam beam;
 
@@ -71,6 +92,26 @@ int main()
         beam.set_t_location(t_pos);
         beam.set_supportType(sup);
         beam.set_selfWeight(weight);
+
+        if(toupper(loadInput) == 'N')
+        {
+            char saveInput;
+            cout << "Do you want to save the input data to file? [Y/N]: ";
+            cin >> saveInput;
+
+            if (toupper(saveInput) == 'Y')
+            {
+                ofstream outStream;
+                outStream.open("inputFile.txt");
+
+                outStream << beam.get_depth() << "\n" << beam.get_width() << "\n" << beam.get_length() << "\n"
+                << beam.get_p_load() << "\n" << beam.get_p_location() << "\n" << beam.get_w_load() << "\n"
+                << beam.get_torsion() << "\n" << beam.get_t_location() << "\n" << beam.get_supportType() << "\n"
+                << beam.get_selfWeight() << endl;
+
+                outStream.close();
+            }
+        }
 
         //create vectors to store results
         vector<double> x, m, s, t;
