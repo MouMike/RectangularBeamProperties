@@ -15,7 +15,7 @@ results of the moment, shear and torsion.
 
 - This application runs in a C++ environment.
 - The Matplotlib library is used to plot the results. This means that you may need to install Python, Numpy and Matplotlib to your
-local system and link them to your compiler to successfully run the application from your local machine.
+local system, if not already installed, and link them to your compiler to successfully run the application from your local machine.
 
 # EXAMPLE:
 
