@@ -121,18 +121,28 @@ double Beam::calculate_moment(int position) const
     //for a fixed beam
     else if(tolower(supportType) == 'f')
     {
-        /*reaction = - ((p_load * (length - p_location) + w_load
-                               * length * length / 2.0) / length);
+        reaction = (1.6 * p_load * (length - p_location) * 1e-03 + (1.6 * w_load + 1.2 * self_weight)
+                               * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03);
+
+        double Mp1, Mp2, Mw;
+
+
+        Mw = - (1.6 * w_load + 1.2 * self_weight) * pow(length * 1e-03, 2) / 12;  //free moment due to distributed load
+        Mp1 = - 1.6 * p_load * p_location * 1e-03 * pow((length - p_location) * 1e-03, 2) / pow(length * 1e-03, 2);  //free moment at first support due to p_load
+        Mp2 = - 1.6 * p_load * pow(p_location * 1e-03, 2) * (length - p_location) * 1e-03 / pow(length * 1e-03, 2);  //free moment at second support due to p_load
+
 
         if(position < p_location)
         {
-            moment  = reaction * position - w_load * position * position / 2.0;
+            moment  = Mw + Mp1 + (Mp2 - Mp1) * position * 1e-03 / length * 1e-03 + reaction * position * 1e-03 - (1.6 * w_load + 1.2 * self_weight)
+            * pow(position * 1e-03, 2) / 2;
         }
 
         else
         {
-            moment  = reaction * position + p_load * (position - length / 2.0) - w_load * position * position / 2.0;
-        }*/
+            moment  = Mw + Mp1 + (Mp2 - Mp1) * position * 1e-03 / (length * 1e-03) + reaction * position * 1e-03 - 1.6 * p_load * (position - length / 2.0)
+            * 1e-03 - (1.6 * w_load + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
+        }
     }
 
     return moment;
@@ -178,6 +188,7 @@ double Beam::calculate_shear(int position) const
         {
             moment  = reaction - p_load;
         }*/
+        shear = 0;
     }
 
     return shear;
@@ -216,6 +227,8 @@ double Beam::calculate_torsion(int position) const
         {
             moment  = reaction - p_load;
         }*/
+
+        temp_torsion = 0;
     }
 
     return temp_torsion;

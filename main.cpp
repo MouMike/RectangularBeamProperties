@@ -11,14 +11,14 @@ int main()
     double P, w, T, weight, moment, shear, torsion;
     char sup, response;
 
-
-
     do{
         char loadInput;
+
         cout << "Do you want to load input from file? [Y/N]: ";
         cin >> loadInput;
         cout << endl;
 
+        //loads input from file
         if (toupper(loadInput) == 'Y')
         {
             ifstream inStream;
@@ -29,6 +29,7 @@ int main()
             inStream.close();
         }
 
+        //if input was not loaded from file, prompts user for input
         else if (toupper(loadInput) == 'N')
         {
             //prompt user input
@@ -89,12 +90,15 @@ int main()
         beam.set_supportType(sup);
         beam.set_selfWeight(weight);
 
+        //if input was not loaded from a file (i.e. input not already in file), provides option to save it to file
         if(toupper(loadInput) == 'N')
         {
             char saveInput;
+
             cout << "Do you want to save the input data to file? [Y/N]: ";
             cin >> saveInput;
 
+            //saves user input to file "inputFile.txt"
             if (toupper(saveInput) == 'Y')
             {
                 ofstream outStream;
