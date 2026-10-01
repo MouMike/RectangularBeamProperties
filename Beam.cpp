@@ -216,20 +216,15 @@ double Beam::calculate_torsion(int position) const
     //for a fixed beam
     else if(tolower(supportType) == 'f')
     {
-        /*reaction = - ((p_load * (length - t_location) + w_load
-                               * length * length / 2.0) / length);
-
         if(position < t_location)
         {
-            shear  = reaction;
+            temp_torsion  = -1.6 * torsion / 2;
         }
 
         else
         {
-            moment  = reaction - p_load;
-        }*/
-
-        temp_torsion = 0;
+            temp_torsion  = 1.6 * torsion / 2;
+        }
     }
 
     return temp_torsion;
