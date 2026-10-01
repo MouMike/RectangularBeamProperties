@@ -28,6 +28,7 @@ class Beam
         double calculate_moment(int position) const;
         double calculate_shear(int position) const;
         double calculate_torsion(int position) const;
+        void displayResults(int beamLength) const;
 
     private:
         int depth;

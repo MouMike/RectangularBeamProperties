@@ -1,13 +1,9 @@
 #include <iostream>
-#include <vector>
 #include <cmath>
 #include <fstream>
-#include "matplotlibcpp.h"
 #include "Beam.h"
 
 using namespace std;
-
-namespace plt = matplotlibcpp;
 
 int main()
 {
@@ -113,40 +109,7 @@ int main()
             }
         }
 
-        //create vectors to store results
-        vector<double> x, m, s, t;
-
-        //store results in vectors
-        for (double i = 0; i < len; i += 0.1)
-        {
-            x.push_back(i);
-            m.push_back(beam.calculate_moment(i));
-            s.push_back(beam.calculate_shear(i));
-            t.push_back(beam.calculate_torsion(i));
-        }
-
-        //plot bending moment diagram
-        plt::subplot(3,1,1);
-        plt::plot(x, m);
-        plt::title("Bending Moment Diagram");
-        plt::ylabel("Bending Moment (kNm)");
-        //plt::show();
-
-        //plot shear force diagram
-        plt::subplot(3,1,2);
-        plt::plot(x, s);
-        plt::title("Shear Force Diagram");
-        plt::ylabel("Shear Force (kN)");
-        //plt::show();
-
-        //plot torsional moment diagram
-        plt::subplot(3,1,3);
-        plt::plot(x, t);
-        plt::title("Torsional Moment Diagram");
-        plt::ylabel("Torsional Moment (kNm)");
-
-        plt::tight_layout(); // Fixes overlapping labels
-        plt::show();
+        beam.displayResults(len);
 
         cout << "Do you want to analyse another beam? [Y/N]: ";
         cin >> response;

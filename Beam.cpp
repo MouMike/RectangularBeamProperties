@@ -1,8 +1,12 @@
 #include "Beam.h"
+#include <vector>
 #include<iostream>
 #include<fstream>
+#include "matplotlibcpp.h"
 
 using namespace std;
+
+namespace plt = matplotlibcpp;
 
 Beam::Beam(): depth(0), width(0), length(0), p_load(0), p_location(0), w_load(0),
                 torsion(0), t_location(0), supportType(' '), selfWeight(0)
@@ -215,4 +219,41 @@ double Beam::calculate_torsion(int position) const
     }
 
     return temp_torsion;
+}
+void Beam::displayResults(int beamLength) const
+{
+    //create vectors to store results
+        vector<double> x, m, s, t;
+
+        //store results in vectors
+        for (double i = 0; i < beamLength; i += 1)
+        {
+            x.push_back(i);
+            m.push_back(calculate_moment(i));
+            s.push_back(calculate_shear(i));
+            t.push_back(calculate_torsion(i));
+        }
+
+        //plot bending moment diagram
+        plt::subplot(3,1,1);
+        plt::plot(x, m);
+        plt::title("Bending Moment Diagram");
+        plt::ylabel("Bending Moment (kNm)");
+        //plt::show();
+
+        //plot shear force diagram
+        plt::subplot(3,1,2);
+        plt::plot(x, s);
+        plt::title("Shear Force Diagram");
+        plt::ylabel("Shear Force (kN)");
+        //plt::show();
+
+        //plot torsional moment diagram
+        plt::subplot(3,1,3);
+        plt::plot(x, t);
+        plt::title("Torsional Moment Diagram");
+        plt::ylabel("Torsional Moment (kNm)");
+
+        plt::tight_layout(); // Fixes overlapping labels
+        plt::show();
 }
