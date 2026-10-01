@@ -7,6 +7,9 @@ using namespace std;
 
 int main()
 {
+    cout << "This application takes beam properties defined by the user and displays the" << endl;
+    cout << "results of the moment, shear and torsion.\n" << endl;
+
     int dep, wid, len, p_pos, t_pos;
     double P, w, T, weight, moment, shear, torsion;
     char sup, response;
@@ -33,7 +36,8 @@ int main()
         else if (toupper(loadInput) == 'N')
         {
             //prompt user input
-            cout << "Enter Beam Properties" << endl;
+            cout << "Enter Beam Properties Below" << endl;
+            cout << "Sign convention: Upwards (+ve), Downwards (-ve)\n" << endl;
 
             cout << "depth (mm): ";
             cin >> dep;
@@ -90,6 +94,8 @@ int main()
         beam.set_supportType(sup);
         beam.set_selfWeight(weight);
 
+        beam.displayResults(len);
+
         //if input was not loaded from a file (i.e. input not already in file), provides option to save it to file
         if(toupper(loadInput) == 'N')
         {
@@ -112,8 +118,6 @@ int main()
                 outStream.close();
             }
         }
-
-        beam.displayResults(len);
 
         cout << "Do you want to analyse another beam? [Y/N]: ";
         cin >> response;

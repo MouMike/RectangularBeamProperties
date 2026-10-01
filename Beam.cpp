@@ -95,25 +95,27 @@ double Beam::get_selfWeight() const
 double Beam::calculate_moment(int position) const
 {
     //SANS10100-1, clause 4.2.2
-    double reaction, moment, self_weight;
+    double reaction, moment, self_weight, pointLoad, udl;
 
-    self_weight = selfWeight * depth * 1e-03 * width * 1e-03;
+    self_weight = - selfWeight * depth * 1e-03 * width * 1e-03;
+    pointLoad = - p_load;
+    udl = - w_load;
 
     //for a simply supported beam
     if(tolower(supportType) == 's')
     {
-        reaction = (1.6 * p_load * (length - p_location) * 1e-03 + (1.6 * w_load + 1.2 * self_weight)
+        reaction = (1.6 * pointLoad * (length - p_location) * 1e-03 + (1.6 * udl + 1.2 * self_weight)
                                * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03);
 
         if(position < p_location)
         {
-            moment  = reaction * position * 1e-03 - (1.6 * w_load + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
+            moment  = reaction * position * 1e-03 - (1.6 * udl + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
         }
 
         else
         {
-            moment  = reaction * position * 1e-03 - 1.6 * p_load * (position - length / 2.0)
-            * 1e-03 - (1.6 * w_load + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
+            moment  = reaction * position * 1e-03 - 1.6 * pointLoad * (position - length / 2.0)
+            * 1e-03 - (1.6 * udl + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
         }
 
     }
@@ -121,27 +123,27 @@ double Beam::calculate_moment(int position) const
     //for a fixed beam
     else if(tolower(supportType) == 'f')
     {
-        reaction = (1.6 * p_load * (length - p_location) * 1e-03 + (1.6 * w_load + 1.2 * self_weight)
+        reaction = (1.6 * pointLoad * (length - p_location) * 1e-03 + (1.6 * udl + 1.2 * self_weight)
                                * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03);
 
         double Mp1, Mp2, Mw;
 
 
-        Mw = - (1.6 * w_load + 1.2 * self_weight) * pow(length * 1e-03, 2) / 12;  //free moment due to distributed load
-        Mp1 = - 1.6 * p_load * p_location * 1e-03 * pow((length - p_location) * 1e-03, 2) / pow(length * 1e-03, 2);  //free moment at first support due to p_load
-        Mp2 = - 1.6 * p_load * pow(p_location * 1e-03, 2) * (length - p_location) * 1e-03 / pow(length * 1e-03, 2);  //free moment at second support due to p_load
+        Mw = - (1.6 * udl + 1.2 * self_weight) * pow(length * 1e-03, 2) / 12;  //free moment due to distributed load
+        Mp1 = - 1.6 * pointLoad * p_location * 1e-03 * pow((length - p_location) * 1e-03, 2) / pow(length * 1e-03, 2);  //free moment at first support due to p_load
+        Mp2 = - 1.6 * pointLoad * pow(p_location * 1e-03, 2) * (length - p_location) * 1e-03 / pow(length * 1e-03, 2);  //free moment at second support due to p_load
 
 
         if(position < p_location)
         {
-            moment  = Mw + Mp1 + (Mp2 - Mp1) * position * 1e-03 / length * 1e-03 + reaction * position * 1e-03 - (1.6 * w_load + 1.2 * self_weight)
+            moment  = Mw + Mp1 + (Mp2 - Mp1) * position * 1e-03 / length * 1e-03 + reaction * position * 1e-03 - (1.6 * udl + 1.2 * self_weight)
             * pow(position * 1e-03, 2) / 2;
         }
 
         else
         {
-            moment  = Mw + Mp1 + (Mp2 - Mp1) * position * 1e-03 / (length * 1e-03) + reaction * position * 1e-03 - 1.6 * p_load * (position - length / 2.0)
-            * 1e-03 - (1.6 * w_load + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
+            moment  = Mw + Mp1 + (Mp2 - Mp1) * position * 1e-03 / (length * 1e-03) + reaction * position * 1e-03 - 1.6 * pointLoad * (position - length / 2.0)
+            * 1e-03 - (1.6 * udl + 1.2 * self_weight) * position * 1e-03 * position * 1e-03 / 2.0;
         }
     }
 
@@ -151,24 +153,26 @@ double Beam::calculate_moment(int position) const
 double Beam::calculate_shear(int position) const
 {
     //SANS10100-1, clause 4.2.2
-    double reaction, shear, self_weight;
+    double reaction, shear, self_weight, pointLoad, udl;
 
     self_weight = selfWeight * depth * 1e-03 * width * 1e-03;
+    pointLoad = - p_load;
+    udl = - w_load;
 
     //for a simply supported beam
     if(tolower(supportType) == 's')
     {
-        reaction = (1.6 * p_load * (length - p_location) * 1e-03 + (1.6 * w_load + 1.2 * self_weight)
+        reaction = (1.6 * pointLoad * (length - p_location) * 1e-03 + (1.6 * udl + 1.2 * self_weight)
                                * length * 1e-03 * length * 1e-03 / 2.0) / (length * 1e-03);
 
         if(position < p_location)
         {
-            shear  = reaction - (1.6 * w_load + 1.2 * self_weight) * position * 1e-03;
+            shear  = reaction - (1.6 * udl + 1.2 * self_weight) * position * 1e-03;
         }
 
         else
         {
-            shear  = reaction - 1.6 * p_load - (1.6 * w_load + 1.2 * self_weight) * position * 1e-03;
+            shear  = reaction - 1.6 * pointLoad - (1.6 * udl + 1.2 * self_weight) * position * 1e-03;
         }
 
     }
@@ -181,14 +185,14 @@ double Beam::calculate_shear(int position) const
 
         if(position < p_location)
         {
-            shear  = 1.6 * p_load * pow((length - p_location) * 1e-03, 2) * (3 * p_location * 1e-03 + (length - p_location) * 1e-03) / pow(length * 1e-03, 3)
-            + (1.6 * w_load + 1.2 * self_weight) * (length * 1e-03 / 2 - position * 1e-03);
+            shear  = 1.6 * pointLoad * pow((length - p_location) * 1e-03, 2) * (3 * p_location * 1e-03 + (length - p_location) * 1e-03) / pow(length * 1e-03, 3)
+            + (1.6 * udl + 1.2 * self_weight) * (length * 1e-03 / 2 - position * 1e-03);
         }
 
         else
         {
-            shear  = - 1.6 * p_load * pow((length - p_location) * 1e-03, 2) * (3 * p_location * 1e-03 + (length - p_location) * 1e-03) / pow(length * 1e-03, 3)
-            + (1.6 * w_load + 1.2 * self_weight) * (length * 1e-03 / 2 - position * 1e-03);
+            shear  = - 1.6 * pointLoad * pow((length - p_location) * 1e-03, 2) * (3 * p_location * 1e-03 + (length - p_location) * 1e-03) / pow(length * 1e-03, 3)
+            + (1.6 * udl + 1.2 * self_weight) * (length * 1e-03 / 2 - position * 1e-03);
         }
     }
 
